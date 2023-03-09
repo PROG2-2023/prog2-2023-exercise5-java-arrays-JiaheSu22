@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "Testing Constructor for array initialization",
+      "setup": "mvn compile",
+      "run": "mvn -Dtest=FlightBookingTest#testing_Constructor_Accepting_Arrays test",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 4
+    },
+    {
+      "name": "Testing ticket reservation method with arrays",
+      "setup": "mvn compile",
+      "run": "mvn -Dtest=FlightBookingTest#testing_Ticket_Reservation_Method test",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 6
+    }
+  ]
+}
