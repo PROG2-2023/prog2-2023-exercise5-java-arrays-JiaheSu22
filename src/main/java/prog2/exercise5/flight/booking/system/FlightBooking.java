@@ -21,9 +21,13 @@ public class FlightBooking {
     public enum TripType {ONE_WAY, RETURN}
 
     private TripType tripType;
+    private TripType[] arrTripType;
     private TripSource tripSource;
+    private TripSource[] arrTripSource;
     private TripDestination tripDestination;
+    private TripDestination[] arrTripDestination;
     private BookingClass bookingClass;
+    private BookingClass[] arrBookingClass;
 
     private enum DestinationAirport {Nanjing_Lukou_International_Airport, Beijing_Capital_International_Airport, Shanghai_Pudong_International_Airport, Oulu_Airport, Helsinki_Airport, Paris_Charles_de_Gaulle_Airport}
 
@@ -32,7 +36,9 @@ public class FlightBooking {
     private SourceAirport sourceAirport;
     private DestinationAirport destinationAirport;
     private LocalDate departureDate;
+    private LocalDate[] arrDepartureDate;
     private LocalDate returnDate;
+    private LocalDate[] arrReturnDate;
     private int childPassengers;
     private int adultPassengers;
     private int totalPassengers;
@@ -41,6 +47,7 @@ public class FlightBooking {
     private double totalTicketPrice = 0; //This must NOT be entered by the Passenger
     private boolean flag = false;
     private String oldDate;
+    private String[] arrOldDate;
     private double totalDepartureTicketPrice;
 
     private String generateFlightID() {
@@ -81,30 +88,24 @@ public class FlightBooking {
         System.out.println();
     }*/
 
-    public String toString1() {
-        return "Thank you for booking your flight with " + flightCompany + "."
-                + "Following are the details" + "\n" + "of your booking and the trip:" + "\n" + "\n"
-                + "Ticket Number: " + ticketNumber + "\n"
-                + "Passenger Name:" + passengerFullName + "\n" + "From " + tripSource + " to " + tripDestination + "\n"
-                + "Date of departure: " + departureDate + "\n"
-                + "Date of return: " + returnDate + "\n"
-                + "Total passengers: " + totalPassengers + "\n"
-                + "Total ticket price in Euros: " + totalTicketPrice;
+    public void displayTripDetails() {
+        System.out.println("Thank you for booking your flight with " + flightCompany + "." );
+        System.out.println("You reserved a total of" + size + "tickets.");
+        for (int i = 0; i < size; i++) {
+            System.out.println("Here are the trip details for Passenger No." + i);
+            System.out.println("Passenger's Ticket Number: " + ticketNumber[i]);
+            System.out.println("Passenger's Full Name: " + passengerFullName[i]);
+            System.out.println("Passenger's Gender: " + passengerGender[i]);
+            System.out.println("From: "+ arrTripSource[i]);
+            System.out.println("to: "+ arrTripDestination[i]);
+            System.out.println("The flight departs on: " + arrDepartureDate[i]);
+            if(flag){
+                System.out.println("And the return flight is on: " + arrReturnDate[i] + "(Changed from old " + arrOldDate[i] + " to new "
+                        + arrReturnDate[i] );
+            }else System.out.println("And the return flight is on: " + arrReturnDate[i]);
+        }
     }
 
-    public String toString2() {
-        return "Thank you for booking your flight with " + flightCompany + "."
-                + "Following are the details" + "\n" + "of your booking and the trip:" + "\n" + "\n"
-                + "Ticket Number: " + ticketNumber + "\n"
-                + "Passenger Name:" + passengerFullName + "\n"
-                + "From " + tripSource + " to " + tripDestination + "\n"
-                + "Date of departure: " + departureDate + "\n"
-                + "Date of return: " + returnDate + "(Changed from old " + oldDate + " to new " + returnDate + ")" + "\n"
-                + "Total passengers: " + totalPassengers + "\n"
-                + "Total ticket price in Euros: " + totalTicketPrice + "\n" + "\n"
-                + "IMPORTANT NOTICE: As per our policy, the return date was changed because it was" + "\n"
-                + "less than two days apart from your departure date.";
-    }
 
     public void setTripDestination(String tripDestinationChoice) {
         int choice = Integer.parseInt(tripDestinationChoice);
@@ -126,9 +127,34 @@ public class FlightBooking {
         }
     }
 
+    public void setTripDestination(int i, String tripDestinationChoice) {
+        int choice = Integer.parseInt(tripDestinationChoice);
+        switch (choice) {
+            case 1:
+                this.arrTripDestination[i] = TripDestination.NANJING;
+                break;
+            case 2:
+                this.arrTripDestination[i] = TripDestination.BEIJING;
+                break;
+            case 3:
+                this.arrTripDestination[i] = TripDestination.OULU;
+                break;
+            case 4:
+                this.arrTripDestination[i] = TripDestination.HELSINKI;
+                break;
+            default:
+                System.out.println("Invalid trip source choice: " + tripDestinationChoice);
+        }
+    }
+
     public void setBookingClass(String inputChoice) {
         int choice = Integer.parseInt(inputChoice);
         this.bookingClass = BookingClass.values()[choice - 1];
+    }
+
+    public void setBookingClass(int i, String inputChoice) {
+        int choice = Integer.parseInt(inputChoice);
+        this.arrBookingClass[i] = BookingClass.values()[choice - 1];
     }
 
     public BookingClass getBookingClass() {
@@ -159,6 +185,26 @@ public class FlightBooking {
         }
     }
 
+    public void setTripSource(int i, String tripSourceChoice) {
+        int choice = Integer.parseInt(tripSourceChoice);
+        switch (choice) {
+            case 1:
+                this.arrTripSource[i] = TripSource.NANJING;
+                break;
+            case 2:
+                this.arrTripSource[i] = TripSource.BEIJING;
+                break;
+            case 3:
+                this.arrTripSource[i] = TripSource.OULU;
+                break;
+            case 4:
+                this.arrTripSource[i] = TripSource.HELSINKI;
+                break;
+            default:
+                System.out.println("Invalid trip source choice: " + tripSourceChoice);
+        }
+    }
+
     public void setTripDestination(String sourceInput, String destinationInput) {
         int sourceChoice = Integer.parseInt(sourceInput);
         int destinationChoice = Integer.parseInt(destinationInput);
@@ -176,6 +222,11 @@ public class FlightBooking {
         this.tripType = choice == 1 ? TripType.ONE_WAY : TripType.RETURN;
     }
 
+    public void setTripType(int i, String inputChoice) {
+        int choice = Integer.parseInt(inputChoice);
+        this.arrTripType[i] = choice == 1 ? TripType.ONE_WAY : TripType.RETURN;
+    }
+
     public TripType getTripType() {
         return this.tripType;
     }
@@ -185,8 +236,7 @@ public class FlightBooking {
 
     }
 
-    public void displayConfirmationMessage() {
-        // Format and display confirmation message
+   /* public void displayConfirmationMessage() {
         System.out.println("Dear " + passengerFullName + ". Thank you for booking your flight with " + flightCompany + ".");
         System.out.println("Following are the details of your booking and the trip:");
         System.out.println("Ticket Number: " + ticketNumber);
@@ -196,7 +246,7 @@ public class FlightBooking {
         System.out.println("Total passengers: " + getTotalPassengers());
         System.out.println("Total ticket price in Euros: " + getTotalTicketPrice());
         flightID = generateFlightID();
-    }
+    }*/
 
     public String getFlightID() {
         return flightID;
@@ -239,6 +289,15 @@ public class FlightBooking {
         }
     }
 
+    public void setDepartureDate(int i, LocalDate departureDate) {
+        this.arrDepartureDate[i] = departureDate;
+        if (arrReturnDate[i] != null && departureDate.plusDays(2).isAfter(arrReturnDate[i])) {
+            arrReturnDate[i] = departureDate.plusDays(2);
+            System.out.println("Return date adjusted to " + arrReturnDate[i]);
+        }
+    }
+
+
     public LocalDate getReturnDate() {
         return returnDate;
     }
@@ -250,6 +309,20 @@ public class FlightBooking {
             oldDate = returnDate.toString();
         } else {
             this.returnDate = returnDate;
+        }
+    }
+
+    public void setReturnDate(int i, LocalDate returnDate) {
+        if (arrDepartureDate[i] != null) {
+            LocalDate minReturnDate = arrDepartureDate[i].plusDays(2);
+            if (arrReturnDate[i] == null || arrReturnDate[i].isBefore(minReturnDate)) {
+                this.arrReturnDate[i] = minReturnDate;
+                flag = true;
+                arrOldDate[i] = arrReturnDate[i].toString();
+            }
+        }
+        if (arrReturnDate[i] == null || returnDate.isAfter(arrReturnDate[i])) {
+            this.arrReturnDate[i] = returnDate;
         }
     }
 
@@ -278,6 +351,10 @@ public class FlightBooking {
 
     public void setTotalPassengers(int num1, int num2) {
         totalPassengers = num1 + num2;
+    }
+
+    public void setTotalPassengers(int num) {
+        totalPassengers = num;
     }
 
     public void setPassengerFullName(int i, String passengerFullName) {
@@ -348,6 +425,21 @@ public class FlightBooking {
         this.ticketNumber = new String[size];
     }
 
+    public void reserveTickets(int i) {
+        this.size = i;
+        this.passengerFullName = new String[size];
+        this.passengerGender = new String[size];
+        this.passengerAge = new int[size];
+        this.ticketNumber = new String[size];
+        this.arrTripSource = new TripSource[size];
+        this.arrTripDestination = new TripDestination[size];
+        this.arrDepartureDate = new LocalDate[size];
+        this.arrReturnDate = new LocalDate[size];
+        this.arrOldDate = new String[size];
+        this.arrTripType = new TripType[size];
+        this.arrBookingClass = new BookingClass[size];
+    }
+
     public void setDestinationAirport(String str) {
         int temp = Integer.parseInt(str);
         switch (temp) {
@@ -413,6 +505,14 @@ public class FlightBooking {
             default:
                 System.out.println("Invalid number!");
         }
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public TripType getArrTripType(int i) {
+        return arrTripType[i];
     }
 }
 
